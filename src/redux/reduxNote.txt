@@ -1,0 +1,6 @@
+1. bikin sebuah store dengan import createStore
+2. di combine reducers yg berisi reducer2 dengan import combineReducers 
+3. bikin reducers yg berisi state dan action type
+4. cosume stateredux pake useSelector dan useDispacth
+useSelector buat manggil state dari reduxnya,
+useDispacth itu buat trigger ke reducer apabila typenya ada yg sama.
