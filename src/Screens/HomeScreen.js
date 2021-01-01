@@ -31,7 +31,8 @@ const HomeScreen = () => {
   console.log(products)
   return (
     <>
-      {products ? products.map((product) => {
+      { loading ? <p>loading ...</p> :
+        products ? products.map((product) => {
             return (
               <li key={product._id}>
                 <div className="product">
@@ -55,7 +56,8 @@ const HomeScreen = () => {
                 </div>
               </li>
             );
-          }) : loading ? <p>loading ...</p> : error
+          }) :  
+        <p>{error}</p>
       }
     </>
   );

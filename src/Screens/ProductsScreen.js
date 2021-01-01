@@ -1,9 +1,10 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { Link } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
 import {detailProduct} from '../redux/action/ProductAction'
 
 const ProductsScreen = (props) => {
+  const [qty, setqty] = useState(1)
   const dispatch = useDispatch();
   const productDetails = useSelector(state => state.productDetails);
   const {product, loading , error} = productDetails;
@@ -36,7 +37,13 @@ const ProductsScreen = (props) => {
           <ul>
             <li>Price : {product.data.price}</li>
             <li>Status : {product.data.status}</li>
-            <li>Qty : <select><option>1</option><option>2</option><option>3</option><option>4</option></select></li>
+            <li>Qty : <select value={qty} onChange={(e) => setqty(e.target.value)}>
+              {[...Array(product.data.countInStock).keys()].map(x => {
+                return (
+                  <option key={x+1} value={x +1}>{x+1}</option>
+                )
+              })}
+            </select></li>
             <li><button>Add to Cart</button></li>
           </ul>
         </div>

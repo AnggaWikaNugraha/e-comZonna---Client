@@ -1,4 +1,4 @@
-import {PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL} from '../constants'
+import {PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS} from '../constants'
 import axios from 'axios'
 
 const listProduct = () => async (dispatch) => {
@@ -13,11 +13,11 @@ const listProduct = () => async (dispatch) => {
 
 const detailProduct = (productId) => async (dispatch) => {
   try {
-    dispatch({type : PRODUCT_LIST_REQUEST, payload: productId});
+    dispatch({type : PRODUCT_DETAILS_REQUEST, payload: productId});
     const data = await axios.get('http://localhost:5000/api/products/' + productId);
-    dispatch({type : PRODUCT_DELETE_SUCCESS , payload : data})
+    dispatch({type : PRODUCT_DETAILS_SUCCESS, payload : data})
   } catch (error) {
-    dispatch({type : PRODUCT_DELETE_FAIL, payload: error})
+    dispatch({type : PRODUCT_DETAILS_FAIL, payload: error})
   }
 }
 
