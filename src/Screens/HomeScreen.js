@@ -1,7 +1,7 @@
-import React,{useState,useEffect} from "react";
-import { Link } from "react-router-dom";
+import React,{useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux'
 import {listProduct} from '../redux/action/ProductAction'
+import {Link} from 'react-router-dom'
 
 const HomeScreen = () => {
   const productList = useSelector(state => state.productList)
@@ -31,12 +31,7 @@ const HomeScreen = () => {
   console.log(products)
   return (
     <>
-      {loading ? 
-      <div>loading...</div> : error ? 
-      <div>{error}</div> :
-      <div>
-        <ul className="products">
-          {products.map((product) => {
+      {products ? products.map((product) => {
             return (
               <li key={product._id}>
                 <div className="product">
@@ -60,9 +55,8 @@ const HomeScreen = () => {
                 </div>
               </li>
             );
-          })}
-        </ul>
-      </div>}
+          }) : loading ? <p>loading ...</p> : error
+      }
     </>
   );
 };
