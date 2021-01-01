@@ -19,6 +19,10 @@ const ProductsScreen = (props) => {
   // const id = props.match.params.id;
   // const product = data.products.find(x => x._id === id);
 
+  const handleAddCart = () => {
+    props.history.push('/cart/' + props.match.params.id + "?qty=" + qty)
+  }
+
   return (
     <div>
       <div className='back-to-result'><Link to='/'>Back to result</Link></div>
@@ -36,7 +40,7 @@ const ProductsScreen = (props) => {
         <div className='details-action'>
           <ul>
             <li>Price : {product.data.price}</li>
-            <li>Status : {product.data.status}</li>
+            <li>Status : {product.data.countInStock > 0 ? "In stock" : <div>Out of Stock</div>}</li>
             <li>Qty : <select value={qty} onChange={(e) => setqty(e.target.value)}>
               {[...Array(product.data.countInStock).keys()].map(x => {
                 return (
@@ -44,7 +48,9 @@ const ProductsScreen = (props) => {
                 )
               })}
             </select></li>
-            <li><button>Add to Cart</button></li>
+            <li>
+              {product.data.countInStock > 0 && <button onClick={handleAddCart}>Add to Cart</button> }
+            </li>
           </ul>
         </div>
       </div> :

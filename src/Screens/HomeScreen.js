@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {listProduct} from '../redux/action/ProductAction'
 import {Link} from 'react-router-dom'
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
   const productList = useSelector(state => state.productList)
   const {products, loading, error} = productList
   const dispatch = useDispatch();
@@ -27,6 +27,8 @@ const HomeScreen = () => {
     // }
     // fetchData()
   }, [])
+
+  
   
   console.log(products)
   return (
