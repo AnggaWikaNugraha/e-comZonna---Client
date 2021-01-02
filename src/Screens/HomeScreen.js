@@ -30,7 +30,7 @@ const HomeScreen = (props) => {
 
   
   
-  console.log(products)
+  // console.log(products)
   return (
     <>
       { loading ? <p>loading ...</p> :

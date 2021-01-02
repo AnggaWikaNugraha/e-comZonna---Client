@@ -16,6 +16,8 @@ const ProductsScreen = (props) => {
     }
   }, [])
 
+  console.log(qty)
+
   // const id = props.match.params.id;
   // const product = data.products.find(x => x._id === id);
 
