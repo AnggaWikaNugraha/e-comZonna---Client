@@ -8,7 +8,6 @@ const SigninScreen = (props) => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const userSigin = useSelector((state) => state.userSignin);
-  console.log(userSigin)
   const { loading, userInfo, error } = userSigin;
 
   useEffect(() => {

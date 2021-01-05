@@ -1,64 +1,127 @@
-import React,{useEffect,useState} from 'react'
-import { Link } from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux'
-import {detailProduct} from '../redux/action/ProductAction'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {saveProduct} from '../redux/action/ProductAction.js'
 
 const ProductsScreen = (props) => {
-  const [qty, setqty] = useState(1)
+  const [name, setname] = useState("");
+  const [price, setprice] = useState("");
+  const [image, setimage] = useState('');
+  const [brand, setbrand] = useState('');
+  const [category, setcategory] = useState('');
+  const [countInStock, setcountInStock] = useState('');
+  const [description, setdescription] = useState('');
+  const productSave = useSelector((state) => state.productSave);
+  const { loading : loadingSave, success : successSave, userInfo, error : errorSave } = productSave;
   const dispatch = useDispatch();
-  const productDetails = useSelector(state => state.productDetails);
-  const {product, loading , error} = productDetails;
 
   useEffect(() => {
-    dispatch(detailProduct(props.match.params.id));
-    return () => {
-      
-    }
-  }, [])
+    
+    return () => {};
+  }, []);
 
-  console.log(qty)
-
-  // const id = props.match.params.id;
-  // const product = data.products.find(x => x._id === id);
-
-  const handleAddCart = () => {
-    props.history.push('/cart/' + props.match.params.id + "?qty=" + qty)
-  }
+  const submitHanlder = (e) => {
+    e.preventDefault();
+    dispatch(saveProduct({
+      name : name,
+      price : price,
+      image : image,
+      brand : brand,
+      category : category,
+      countInStock : countInStock,
+      description : description,
+    }));
+  };
 
   return (
     <div>
-      <div className='back-to-result'><Link to='/'>Back to result</Link></div>
-      { loading  ? <p>loading...</p> : 
-        product.data ? <div className='details'>
-        <div className='details-image'><img src={product.data.image} alt={product.data.name}/></div>
-        <div className='details-info'>
-          <li><h4>{product.data.name}</h4></li>
-          <li>{product.data.rating} Stars ({product.data.numReviews})</li>
-          <li><b>{product.data.price}</b></li>
-          <li> Description :
-            <div>{product.data.description}</div>
+      <div className="form">
+      <form onSubmit={submitHanlder}>
+        <ul className="form-container">
+          <li>
+            <h2>Cteate Product</h2>
           </li>
-        </div>
-        <div className='details-action'>
-          <ul>
-            <li>Price : {product.data.price}</li>
-            <li>Status : {product.data.countInStock > 0 ? "In stock" : <div>Out of Stock</div>}</li>
-            <li>Qty : <select value={qty} onChange={(e) => setqty(e.target.value)}>
-              {[...Array(product.data.countInStock).keys()].map(x => {
-                return (
-                  <option key={x+1} value={x +1}>{x+1}</option>
-                )
-              })}
-            </select></li>
-            <li>
-              {product.data.countInStock > 0 && <button onClick={handleAddCart}>Add to Cart</button> }
-            </li>
-          </ul>
-        </div>
-      </div> :
-      error}
+          <li>
+            {loadingSave && <div>loading ...</div>}
+            {errorSave && <div>{errorSave}</div>}
+          </li>
+          <li>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              onChange={(e) => setname(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="price">Price</label>
+            <input
+              type="text"
+              name="price"
+              id="price"
+              onChange={(e) => setprice(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="image">Image</label>
+            <input
+              type="text"
+              name="image"
+              id="image"
+              onChange={(e) => setimage(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="brand">Brand</label>
+            <input
+              type="text"
+              name="brand"
+              id="brand"
+              onChange={(e) => setbrand(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="category">Category</label>
+            <input
+              type="text"
+              name="category"
+              id="category"
+              onChange={(e) => setcategory(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="countInStock">CountInStock</label>
+            <input
+              type="text"
+              name="countInStock"
+              id="countInStock"
+              onChange={(e) => setcountInStock(e.target.value)}
+            />
+          </li>
+          <li>
+            <label for="description">Description</label>
+            <textarea
+              type="text"
+              name="description"
+              id="description"
+              onChange={(e) => setdescription(e.target.value)}
+            />
+          </li>  
+          <li>
+            <Link
+              style={{ textAlign: "center" }}
+              to="/register"
+              className="button full-width"
+            >
+              Create
+            </Link>
+          </li>
+        </ul>
+      </form>
     </div>
-  )
-}
+    </div>
+  );
+};
 
-export default ProductsScreen
+export default ProductsScreen;
