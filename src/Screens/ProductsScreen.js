@@ -22,15 +22,15 @@ const ProductsScreen = (props) => {
 
   const submitHanlder = (e) => {
     e.preventDefault();
-    // dispatch(saveProduct({
-    //   name : name,
-    //   price : price,
-    //   image : image,
-    //   brand : brand,
-    //   category : category,
-    //   countInStock : countInStock,
-    //   description : description,
-    // }));
+    dispatch(saveProduct({
+      name : name,
+      price : price,
+      image : image,
+      brand : brand,
+      category : category,
+      countInStock : countInStock,
+      description : description,
+    }));
     console.log({
       name : name,
       price : price,

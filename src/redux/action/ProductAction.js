@@ -15,12 +15,12 @@ const saveProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type : PRODUCT_SAVE_REQUEST, payload : product });
     const { userSignin : { userInfo }} = getState();
-    const { data } = await axios.post('http://localhost:5000/api/products', product 
-    // {
-    //   headers : {
-    //     'Authorization' : 'Bearer' + userInfo.token
-    //   }
-    // }
+    const { data } = await axios.post('http://localhost:5000/api/products', product ,
+    {
+      headers : {
+        'Authorization' : 'Bearer' + userInfo.token
+      }
+    }
     );
     dispatch({ type : PRODUCT_SAVE_SUCCESS, payload : data});
   } catch (error) {
