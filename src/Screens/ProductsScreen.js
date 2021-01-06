@@ -22,7 +22,16 @@ const ProductsScreen = (props) => {
 
   const submitHanlder = (e) => {
     e.preventDefault();
-    dispatch(saveProduct({
+    // dispatch(saveProduct({
+    //   name : name,
+    //   price : price,
+    //   image : image,
+    //   brand : brand,
+    //   category : category,
+    //   countInStock : countInStock,
+    //   description : description,
+    // }));
+    console.log({
       name : name,
       price : price,
       image : image,
@@ -30,7 +39,7 @@ const ProductsScreen = (props) => {
       category : category,
       countInStock : countInStock,
       description : description,
-    }));
+    })
   };
 
   return (
@@ -109,13 +118,12 @@ const ProductsScreen = (props) => {
             />
           </li>  
           <li>
-            <Link
+            <button
               style={{ textAlign: "center" }}
-              to="/register"
               className="button full-width"
             >
               Create
-            </Link>
+            </button>
           </li>
         </ul>
       </form>
