@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {saveProduct} from '../redux/action/ProductAction.js'
+import {listProduct, saveProduct} from '../redux/action/ProductAction.js'
 
 const ProductsScreen = (props) => {
   const [name, setname] = useState("");
@@ -10,13 +10,15 @@ const ProductsScreen = (props) => {
   const [brand, setbrand] = useState('');
   const [category, setcategory] = useState('');
   const [countInStock, setcountInStock] = useState('');
+  const productList = useSelector(state => state.productList);
+  const {loading, products, error} = productList;
   const [description, setdescription] = useState('');
   const productSave = useSelector((state) => state.productSave);
   const { loading : loadingSave, success : successSave, userInfo, error : errorSave } = productSave;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    
+    dispatch(listProduct())
     return () => {};
   }, []);
 
@@ -41,6 +43,8 @@ const ProductsScreen = (props) => {
       description : description,
     })
   };
+
+  console.log(products)
 
   return (
     <div>
@@ -128,6 +132,40 @@ const ProductsScreen = (props) => {
         </ul>
       </form>
     </div>
+    {products && <div className="product-list">
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Brand</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>{product.price}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
+                <td>
+                <button className="button">
+                    Edit
+                  </button>
+                  <button
+                    className="button">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>}
     </div>
   );
 };

@@ -25,6 +25,8 @@ const ProductScreen = (props) => {
     props.history.push('/cart/' + props.match.params.id + "?qty=" + qty)
   }
 
+  console.log(product)
+
   return (
     <div>
       <div className='back-to-result'><Link to='/'>Back to result</Link></div>
