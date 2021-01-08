@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { listProduct, saveProduct } from "../redux/action/ProductAction.js";
+import { listProduct, saveProduct , deleteProduct } from "../redux/action/ProductAction.js";
 
 const ProductsScreen = (props) => {
   const [id, setid] = useState("");
@@ -11,26 +11,27 @@ const ProductsScreen = (props) => {
   const [brand, setbrand] = useState("");
   const [category, setcategory] = useState("");
   const [countInStock, setcountInStock] = useState("");
-  const productList = useSelector((state) => state.productList);
-  const { loading, products, error } = productList;
   const [description, setdescription] = useState("");
-  const productSave = useSelector((state) => state.productSave);
-  const {
-    loading: loadingSave,
-    success: successSave,
-    userInfo,
-    error: errorSave,
-  } = productSave;
-  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
 
+  const productList = useSelector((state) => state.productList);
+  const { loading, products, error } = productList;
+  
+  const productSave = useSelector((state) => state.productSave);
+  const { loading: loadingSave, success: successSave,error: errorSave} = productSave;
+
+  const productDelete = useSelector(state => state.productDelete);
+  const { loading: loadingDelete, success: successDelete,error: errorDelete} = productDelete;
+
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     if(successSave){
       setModalVisible(false)
     }
     dispatch(listProduct());
     return () => {};
-  }, [successSave]);
+  }, [successSave, successDelete]);
 
   const submitHanlder = (e) => {
     e.preventDefault();
@@ -68,16 +69,20 @@ const ProductsScreen = (props) => {
     setcountInStock(product.countInStock);
   };
 
+  const deleteHandler = (product) => {
+    dispatch(deleteProduct(product._id));
+  }
+
   console.log(products);
 
   return (
     <div>
       <div className="product-header">
         <h3>Products</h3>
-      </div>
-      <button className="button primary" onClick={() => openModal({})}>
+        <button className="button primary" onClick={() => openModal({})}>
         Create Product
       </button>
+      </div>
       {modalVisible && (
         <div className="form">
           <form onSubmit={submitHanlder}>
@@ -208,7 +213,7 @@ const ProductsScreen = (props) => {
                     >
                       Edit
                     </button>
-                    <button className="button">Delete</button>
+                    <button onClick={()=> deleteHandler(product)} className="button">Delete</button>
                   </td>
                 </tr>
               ))}
